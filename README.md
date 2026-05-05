@@ -6,7 +6,7 @@ DachshundSense is a lightweight wearable system built using an Arduino Nano 33 B
 
 This repository contains the full project structure, including documentation, training data, the Edge Impulse export, and the Arduino sketch used for live inference.
 
-A full write‑up of the methodology, experiments, and results can be found in README_DS.md, which serves as the main project report.
+A full write‑up of the methodology, experiments, and results can be found in report.md, which serves as the main project report.
 
 ## Important Notes
 
@@ -27,10 +27,15 @@ Contains all IMU training samples, labels, and raw data exported from Edge Impul
 Includes the full project ZIP from Edge Impulse so the entire pipeline is reproducible.
 
 ```sketches/```
-Contains the Arduino Nano 33 BLE Sense sketch used for running live inference and displaying classification output.
+Contains the Arduino Nano 33 BLE Sense sketch used for running live inference and displaying classification output. The second sketch represents a future extension of the system, introducing Bluetooth Low Energy (BLE) for wireless communication. It builds on the original inference the main changes include:
+
+- added <ArduinoBLE.h>
+- created a BLE service + characteristic
+- started BLE advertising in setup()
+- sent the highest-confidence prediction over BLE after each inference
 
 ```documentation/```
 Holds images, live demos and supporting materials used in the report.
 
-```README_DS.md```
+```report.md```
 Serves as the main report covering background, data collection, modelling, experiments, and conclusions.
