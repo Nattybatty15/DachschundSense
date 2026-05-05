@@ -9,8 +9,13 @@ DachshundSense is a low-cost wearable system that uses embedded machine learning
 The inspiration for this project comes from owning a reactive dachshund in a city apartment, where space constraints and long working hours can make it difficult to monitor a dog’s wellbeing (Adamson, 2011). As dachshunds grow in popularity in urban environments, their energetic and sometimes anxious nature(Adamson, 2011) highlights the need for simple monitoring solutions that help owners understand their pets’ behaviour, particularly when left alone.
 
 This project is influenced by existing activity trackers but adopts a more lightweight approach, addressing the challenge of whether accurate behaviour classification can be achieved using limited computational resources. Comparable studies using wearable IMU sensors have reported similar results for similar behaviour classes, suggesting that the performance achieved in this project is consistent with existing research (Kurlarni, 2024).
+<img width="3840" height="2160" alt="8AB7A5D9-896F-4ECC-A780-7337AD5EBA93" src="https://github.com/user-attachments/assets/4acf55e7-fab5-4d82-aae1-5809988dfb2c" />
+<img width="1206" height="652" alt="IMG_7064" src="https://github.com/user-attachments/assets/34af5091-9f0d-4347-880e-a03527166389" />
+<img width="1206" height="948" alt="IMG_6FAA5EFB4284-1" src="https://github.com/user-attachments/assets/b4e3c421-79c6-4e9a-8fd8-604725a94441" />
+**Figure 1. Visual examples of the three labelled behaviours (lying down, sitting, and walking) with the Arduino Nano 33 BLE Sense attached to the collar. The walking and lying image highlights optimal device positioning, where the sensor is securely aligned with the body, enabling more reliable and consistent motion data capture compared to less stable placements.**
 
 ## Research Question
+
 
 How effectively can embedded TinyML systems classify dachshund behaviour using real-time IMU sensor data?
 
