@@ -32,9 +32,11 @@ In the final stage, the trained model is deployed back onto the Arduino, enablin
 
 
 ## Data
-Describe what data sources you have used and any cleaning, wrangling or organising you have done. Including some examples of the data helps others understand what you have been working with.
 
-*Tip: probably ~200 words and images of what the data 'looks like' are good!*
+Motion data was collected using the onboard IMU of the Arduino Nano 33 BLE Sense, capturing nine channels accX, accY, accZ, gyrX, gyrY, gyrZ, and(magX, magY, magZ (Lara & Labrador, 2013). Data was sampled at 62.5 Hz using 5-second windows. This rate was chosen because it exceeds the frequency of typical motion patterns, ensuring sufficient detail while remaining computationally efficient (Lara and Labrador, 2013) and longer data points often captured multiple behaviours due to rapid state transitions.
+Three behaviours (walking, sitting, and lying down) were selected due to their feasibility for consistent data collection and their relevance to behavioural monitoring. These states provide meaningful indicators of wellbeing; for example, prolonged inactivity (lying) may indicate low energy or illness, while excessive movement (walking) can signal anxiety or restlessness (Adamson, 2011).
+To ensure robustness, data was collected across varied home environments and surfaces, including beds (high/low), sofa, dog-bed, chairs, rugs, and benches. Several days were spent acclimating the dog to wearing the device build prior to data collection, ensuring behaviour was not biased by reactions to the hardware (Kumpulainen, 2018). Additional time was spent refining placement, with the sensor mounted on the upper neck region of the collar to minimise noise and maximise stability (Kulkarni, 2024). “Good posture” of collar was monitored throughout entire training process (Figure 1.) for data consistency.
+The dataset was manually labelled, balanced (~100 samples per class), and split (~80/20) into training and testing sets using Edge Impulse.
 
 ## Model
 This is a Deep Learning project! What model architecture did you use? Did you try different ones? Why did you choose the ones you did?
