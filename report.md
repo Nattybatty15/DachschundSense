@@ -1,4 +1,4 @@
-# DachshundSense: A TinyML-Based Wearable System for Dog Behaviour Classification 
+DachshundSense: A TinyML-Based Wearable System for Dog Behaviour Classification 
 
 Edge Impuse project:
 
@@ -30,6 +30,10 @@ The second stage involves preprocessing and training within Edge Impulse. Raw IM
 
 In the final stage, the trained model is deployed back onto the Arduino, enabling real-time, on-device inference with outputs transmitted via serial or BLE. 
 
+<img width="481" height="167" alt="Screenshot 2026-05-05 at 14 49 50" src="https://github.com/user-attachments/assets/2025e5ed-e175-4849-be55-6a74c592e961" />
+
+Figure 2. Example prediction output from Serial Monitor
+
 
 ## Data
 
@@ -39,24 +43,46 @@ To ensure robustness, data was collected across varied home environments and sur
 The dataset was manually labelled, balanced (~100 samples per class), and split (~80/20) into training and testing sets using Edge Impulse.
 
 ## Model
-This is a Deep Learning project! What model architecture did you use? Did you try different ones? Why did you choose the ones you did?
+The model was implemented using the Edge Impulse classification pipeline, combining spectral feature extraction with a fully connected neural network. Spectral analysis was selected to transform raw IMU signals into frequency-domain representations, enabling clearer separation of dynamic versus static (sitting, lying) behaviours (Muminov et al., 2022). 
 
-*Tip: probably ~200 words and a diagram is usually good to describe your model!*
+The resulting feature vector (117 features) was input to a shallow dense architecture comprising two hidden layers (20 and 10 neurons). This configuration was chosen as a trade-off between representational capacity and resource constraints. Larger architectures were considered but would risk overfitting given the dataset size and exceed deployment limits for TinyML (Warden, 2019).
+The initial model achieved 75% validation accuracy (loss: 0.57). The confusion matrix showed strong performance for walking, but significant misclassification between sitting and lying. This indicated insufficient feature separability for low-motion states, suggesting a need for improved data quality and additional samples (Chambers et al., 2021). The final trained Edge Impulse model was exported as an Arduino library and uploaded. During deployment, the Arduino collected live IMU data, processed it through the Edge Impulse DSP block, and produced real-time class probabilities through the Serial Monitor.
+
+
 
 ## Experiments
-What experiments did you run to test your project? What parameters did you change? How did you measure performance? Did you write any scripts to evaluate performance? Did you use any tools to evaluate performance? Do you have graphs of results? 
 
-*Tip: probably ~300 words and graphs and tables are usually good to convey your results!*
+Two key experiments were conducted to evaluate and improve classification performance. Evaluation metrics included validation accuracy, loss, confusion matrix, precision/recall, and F1-score, all obtained from Edge Impulse.
+
+**Experiment 1: Baseline Model**
+
+The initial phase focused on optimising data acquisition. Sensor placement was varied (front of neck vs upper neck/back), with the front position introducing significant motion artefacts due to nametag interference and excessive contact when interacting with toys or food. The upper neck provided more stable signals and reduced noise (Marcato et al., 2023). Data collection was constrained by the need for natural behaviour, making consistent sampling difficult (Marcator et al., 2023). The baseline model achieved ~75% accuracy (loss: 0.57), but the confusion matrix revealed strong overlap between sitting and lying, indicating poor separability of low-motion classes despite clear classification of walking.
+
+**Experiment 2: Targeted Data Collection**
+
+Rather than increasing model complexity, further experiments prioritised improving data quality. Approximately 100 additional samples were collected (50 sitting, 30 lying, 20 walking), focusing on clearer posture representation. Model parameters (architecture, learning rate, epochs) were not modified, as the initial results suggested the limitation was data-driven rather than due to underfitting (Wang et al., 2017).
+A key hypothesis was that misclassification between sitting and lying was influenced by the dachshund’s body geometry and environment. Due to their short legs and elongated torso, posture can appear similar across different surface heights (Lara & Labrador, 2013) (e.g., sitting on a sofa vs lying on the floor). To address this, additional data was collected across varied furniture heights and contexts to improve feature robustness.
+
+Retraining improved accuracy to 77.5% (loss: 0.40). The confusion matrix shows perfect classification of walking (100%), while sitting (63.3%) and lying (72%) improved but still exhibit overlap, supported by clustering patterns in the feature space. The continued overlap between sitting and lying suggests that these classes are not well-separated in the feature space, meaning their sensor signatures are inherently similar (Muminov et al., 2022).
 
 ## Results and Observations
-Synthesis the main results and observations you made from building the project. Did it work perfectly? Why not? What worked and what didn't? Why? What would you do next if you had more time?  
 
-*Tip: probably ~300 words and remember images and diagrams bring results to life!*
+The system successfully demonstrated real-time embedded inference on the Arduino Nano 33 BLE Sense, showing that a low-cost TinyML pipeline can classify behaviour directly on-device. The model demonstrates strong overall performance, with a high AUC of 0.93 indicating good separability between classes. However, the weighted precision, recall, and F1 score of approximately 0.77–0.78 suggest moderate classification consistency across all behaviours. This reflects the result that walking achieved consistently high performance whilst sitting and lying down remain more difficult to distinguish, with confusion persisting even after targeted data collection.
+
+These signals are influenced by placement, posture variation, and environmental context such as surface height (Marcato et al., 2023). For dachshunds, their body morphology further compresses the distinction between sitting and lying positions. Furthermore, the model is learning patterns that are specific to this dog’s morphology and environment, meaning it would not generalise well to other breeds (Kulkarni, 2024). A user replicating this system would need to retrain the model with data specific to their own dog.
+
+With more time, the system could develop into a fully wearable solution with real-time predictions displayed on a mobile dashboard. The Edge Impulse model could be integrated with BLE using the ArduinoBLE library to connect directly to an application, allowing users to view live behaviour predictions and summaries (Brugarolas et al., 2016). The device could be powered by a compact 3.7V LiPo battery with appropriate voltage regulation and charging circuitry for continuous operation (FitBark, n.d.).
+
+Another direction for future work could expand the model beyond behaviour classification to include context-aware activity recognition, such as identifying when the dog is on specific furniture (e.g., bed, chair, dog bed). This would require collecting labelled data across different surfaces and elevations (Wang et al., 2019) and could enable more insights into daily routines and resting habits.
+
 
 ## Conclusion
-Wrap it up, summarising key findings.
 
-*Tip: probably ~100 words*
+<img width="773" height="222" alt="Screenshot 2026-05-05 at 14 41 51" src="https://github.com/user-attachments/assets/b3b49774-e799-4fc9-89e8-1384fe82f440" />
+
+**Figure 9. Side-by-side visualisation of the physical deployment and inference output. The left image displays the Arduino Nano 33 BLE Sense mounted on the dog’s collar, while the right displays real-time classification results generated by the embedded model**
+
+The DachshundSense system demonstrates the potential of a low-cost TinyML approach for real-time animal behaviour classification, highlighting the importance of data quality, sensor placement, and class design in embedded machine learning (Chambers et al., 2021). Strong performance was achieved for dynamic activities, supporting its feasibility for real-world deployment. However, results indicate that limitations were primarily driven by dataset scale and diversity rather than model design. Future work should focus on more extensive data collection to improve robustness and generalisation, reflecting both the promise and practical challenges of embedded machine learning systems (Chambers et al., 2021).
 
 ## Bibliography
 *If you added any references then add them in here using this format:*
