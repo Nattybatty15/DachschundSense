@@ -32,7 +32,7 @@ In the final stage, the trained model is deployed back onto the Arduino, enablin
 
 <img width="481" height="167" alt="Screenshot 2026-05-05 at 14 49 50" src="https://github.com/user-attachments/assets/2025e5ed-e175-4849-be55-6a74c592e961" />
 
-Figure 2. Example prediction output from Serial Monitor
+**Figure 2. Example prediction output from Serial Monitor**
 
 
 ## Data
@@ -42,13 +42,32 @@ Three behaviours (walking, sitting, and lying down) were selected due to their f
 To ensure robustness, data was collected across varied home environments and surfaces, including beds (high/low), sofa, dog-bed, chairs, rugs, and benches. Several days were spent acclimating the dog to wearing the device build prior to data collection, ensuring behaviour was not biased by reactions to the hardware (Kumpulainen, 2018). Additional time was spent refining placement, with the sensor mounted on the upper neck region of the collar to minimise noise and maximise stability (Kulkarni, 2024). “Good posture” of collar was monitored throughout entire training process (Figure 1.) for data consistency.
 The dataset was manually labelled, balanced (~100 samples per class), and split (~80/20) into training and testing sets using Edge Impulse.
 
+<img width="667" height="407" alt="Screenshot 2026-05-05 at 14 51 33" src="https://github.com/user-attachments/assets/9dd8561f-b4c6-45bc-9250-9309d9b75244" />
+
+**Figure 3. Representative raw sensor data collected from the Arduino Nano 33 BLE Sense for each behaviour class. The plots display nine-axis IMU signals (accelerometer, gyroscope, and magnetometer) over a five-second sampling window. Walking demonstrates strong periodic oscillations across multiple axes, whereas sitting and lying down exhibit low-magnitude, less dynamic signals**
+
+
 ## Model
 The model was implemented using the Edge Impulse classification pipeline, combining spectral feature extraction with a fully connected neural network. Spectral analysis was selected to transform raw IMU signals into frequency-domain representations, enabling clearer separation of dynamic versus static (sitting, lying) behaviours (Muminov et al., 2022). 
+
+<img width="504" height="331" alt="Screenshot 2026-05-05 at 14 53 27" src="https://github.com/user-attachments/assets/50c0483b-ae80-4c27-aa87-7c3a80217464" />
+
+**Figure 4. Edge Impulse pipeline showing the full model architecture**
+
+<img width="348" height="494" alt="Screenshot 2026-05-05 at 14 53 33" src="https://github.com/user-attachments/assets/e8fc54d9-14a8-467f-9569-7e297c8a5b7d" />
+
+**Figure 5. Neural network architecture used for classification**
 
 The resulting feature vector (117 features) was input to a shallow dense architecture comprising two hidden layers (20 and 10 neurons). This configuration was chosen as a trade-off between representational capacity and resource constraints. Larger architectures were considered but would risk overfitting given the dataset size and exceed deployment limits for TinyML (Warden, 2019).
 The initial model achieved 75% validation accuracy (loss: 0.57). The confusion matrix showed strong performance for walking, but significant misclassification between sitting and lying. This indicated insufficient feature separability for low-motion states, suggesting a need for improved data quality and additional samples (Chambers et al., 2021). The final trained Edge Impulse model was exported as an Arduino library and uploaded. During deployment, the Arduino collected live IMU data, processed it through the Edge Impulse DSP block, and produced real-time class probabilities through the Serial Monitor.
 
+**Table 1. Accuracy and loss values with confusion matrix for the dataset showing classification performance across the three behaviour classes**
 
+<img width="638" height="296" alt="Screenshot 2026-05-05 at 14 54 45" src="https://github.com/user-attachments/assets/0b44a493-2dc3-4840-8635-49d99b62b6be" />
+
+<img width="671" height="245" alt="Screenshot 2026-05-05 at 14 56 06" src="https://github.com/user-attachments/assets/240a1332-f247-4388-888a-0ae739da69cc" />
+
+**Figure 6. Data explorer visualisation of the extracted spectral features projected into a reduced feature space. Correctly classified samples cluster by behaviour class, with walking showing clear separability, whereas sitting and lying down display overlapping distributions and higher misclassification rates**
 
 ## Experiments
 
@@ -65,7 +84,18 @@ A key hypothesis was that misclassification between sitting and lying was influe
 
 Retraining improved accuracy to 77.5% (loss: 0.40). The confusion matrix shows perfect classification of walking (100%), while sitting (63.3%) and lying (72%) improved but still exhibit overlap, supported by clustering patterns in the feature space. The continued overlap between sitting and lying suggests that these classes are not well-separated in the feature space, meaning their sensor signatures are inherently similar (Muminov et al., 2022).
 
+**Table 2. Accuracy and loss values with confusion matrix after retraining with additional data**
+
+<img width="693" height="310" alt="Screenshot 2026-05-05 at 14 57 36" src="https://github.com/user-attachments/assets/d317972e-884c-420b-ba76-1c3f8b5193c6" />
+<img width="658" height="378" alt="Screenshot 2026-05-05 at 14 58 32" src="https://github.com/user-attachments/assets/5fc49b44-538c-40e2-babb-6b5e8f08ee81" />
+
+**Figure 7. Updated data explorer visualisation following targeted data collection. Additional samples improve class density and distribution, particularly for sitting, but significant overlap with lying down remains.**
+
 ## Results and Observations
+
+**Table 3. Final validation performance metrics for the trained model**
+
+<img width="662" height="270" alt="Screenshot 2026-05-05 at 14 58 58" src="https://github.com/user-attachments/assets/b7133415-ec85-447a-afb6-4e8f11f5a833" />
 
 The system successfully demonstrated real-time embedded inference on the Arduino Nano 33 BLE Sense, showing that a low-cost TinyML pipeline can classify behaviour directly on-device. The model demonstrates strong overall performance, with a high AUC of 0.93 indicating good separability between classes. However, the weighted precision, recall, and F1 score of approximately 0.77–0.78 suggest moderate classification consistency across all behaviours. This reflects the result that walking achieved consistently high performance whilst sitting and lying down remain more difficult to distinguish, with confusion persisting even after targeted data collection.
 
