@@ -1,20 +1,30 @@
-# Report title goes here
+# DachshundSense: A TinyML-Based Wearable System for Dog Behaviour Classification 
 
-Name of author, link to github repo with project work in / link to Edge Impulse projects
+Edge Impuse project:
 
 ## Introduction
-- an overview of what the project does
-- your inspiration for making the project 
-- examples that it is based on.
-- what is the problem you are trying to solve?
 
-*Tip: probably ~200 words and images are good!*
+DachshundSense is a low-cost wearable system that uses embedded machine learning (TinyML) to classify dog behaviour in real time. Built around an Arduino Nano 33 BLE Sense mounted on a dog’s collar, the device collects motion sensor data to identify three key behaviours: walking, sitting, and lying down. The project demonstrates how meaningful behavioural insights can be derived without the need for cameras, cloud computing, or high-power hardware (Kularni, 2024).
+
+The inspiration for this project comes from owning a reactive dachshund in a city apartment, where space constraints and long working hours can make it difficult to monitor a dog’s wellbeing (Adamson, 2011). As dachshunds grow in popularity in urban environments, their energetic and sometimes anxious nature(Adamson, 2011) highlights the need for simple monitoring solutions that help owners understand their pets’ behaviour, particularly when left alone.
+
+This project is influenced by existing activity trackers but adopts a more lightweight approach, addressing the challenge of whether accurate behaviour classification can be achieved using limited computational resources. Comparable studies using wearable IMU sensors have reported similar results for similar behaviour classes, suggesting that the performance achieved in this project is consistent with existing research (Kurlarni, 2024).
+
+## Research Question
+
+How effectively can embedded TinyML systems classify dachshund behaviour using real-time IMU sensor data?
 
 
 ## Application Overview
-Thinking back to the various application diagrams you have seen through the module - how would you describe an overview of the building blocks of your project - how do they connect, what do the component parts include.
 
-*Tip: probably ~200 words and a diagram is usually good to convey your design!*
+The system follows a modular TinyML architecture consisting of three connected building blocks: sensing, model development, and embedded inference.
+
+In the sensing stage, an Arduino Nano 33 BLE Sense collects tri-axial accelerometer and gyroscope data via its onboard IMU (Lara & Labrador, 2013). The board is powered through a USB connection to a computer during development or alternatively could be powered via a battery or power bank. Sensor data is streamed to Edge Impulse for labelling and storage.
+
+The second stage involves preprocessing and training within Edge Impulse. Raw IMU data is transformed into spectral features, and a neural network is trained to classify behaviours under embedded constraints.
+
+In the final stage, the trained model is deployed back onto the Arduino, enabling real-time, on-device inference with outputs transmitted via serial or BLE. 
+
 
 ## Data
 Describe what data sources you have used and any cleaning, wrangling or organising you have done. Including some examples of the data helps others understand what you have been working with.
