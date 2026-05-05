@@ -1,3 +1,36 @@
 # DachschundSense
-CASA0018 Deep Learning for Sensor Networks course material
-<img width="1206" height="652" alt="IMG_7064" src="https://github.com/user-attachments/assets/6211896c-045e-4189-9c36-e7119522fa1a" />
+CASA0018 Deep Learning for Sensor Networks course material. 
+
+## Overview
+DachshundSense is a lightweight wearable system built using an Arduino Nano 33 BLE Sense and TinyML. It classifies three core behaviours — walking, sitting, and lying down — using IMU sensor data collected directly from the collar.
+
+This repository contains the full project structure, including documentation, training data, the Edge Impulse export, and the Arduino sketch used for live inference.
+
+A full write‑up of the methodology, experiments, and results can be found in README_DS.md, which serves as the main project report.
+
+## Important Notes
+
+**Clarifications**
+
+The live demo shown in the video includes the only instance where the dog’s behaviour was intentionally prompted for demonstration purposes.
+All training data was collected from natural behaviour, not staged or coerced actions.
+
+- Retraining required for other dogs
+- This model is not generalisable across dog breeds
+- Because IMU signatures vary by size, posture, morphology, and behaviour: Any user repeating this project MUST retrain the model with data from their own dog.
+
+The model in this repo is tailored to one specific dachshund and will not reliably transfer to other dogs.
+
+## Folder Details
+```data/```
+Contains all IMU training samples, labels, and raw data exported from Edge Impulse.
+Includes the full project ZIP from Edge Impulse so the entire pipeline is reproducible.
+
+```sketches/```
+Contains the Arduino Nano 33 BLE Sense sketch used for running live inference and displaying classification output.
+
+```documentation/```
+Holds images, live demos and supporting materials used in the report.
+
+```README_DS.md```
+Serves as the main report covering background, data collection, modelling, experiments, and conclusions.
