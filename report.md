@@ -115,13 +115,29 @@ Another direction for future work could expand the model beyond behaviour classi
 The DachshundSense system demonstrates the potential of a low-cost TinyML approach for real-time animal behaviour classification, highlighting the importance of data quality, sensor placement, and class design in embedded machine learning (Chambers et al., 2021). Strong performance was achieved for dynamic activities, supporting its feasibility for real-world deployment. However, results indicate that limitations were primarily driven by dataset scale and diversity rather than model design. Future work should focus on more extensive data collection to improve robustness and generalisation, reflecting both the promise and practical challenges of embedded machine learning systems (Chambers et al., 2021).
 
 ## Bibliography
-*If you added any references then add them in here using this format:*
+Adamson, E. (2011). Dachshunds For Dummies. John Wiley & Sons.
 
-1. Last name, First initial. (Year published). Title. Edition. (Only include the edition if it is not the first edition) City published: Publisher, Page(s). http://google.com
+Chambers, R. D., Yoder, N. C., Carson, A. B., Junge, C., Allen, D. E., Prescott, L. M., Bradley, S., Wymore, G., Lloyd, K., & Lyle, S. (2021). Deep Learning Classification of Canine Behavior Using a Single Collar-Mounted Accelerometer: Real-World Validation. Animals, 11(6), 1549. https://doi.org/10.3390/ani11061549
 
-2. Last name, First initial. (Year published). Title. Edition. (Only include the edition if it is not the first edition) City published: Publisher, Page(s). http://google.com
+Chi-Pérez, W., Ríos-Martínez, J., Madera, F., & Estrada-López, J. (2024). Wearable System for Intelligent Monitoring of Assistance and Rescue Dogs. Journal of Physics: Conference Series, 2699, 012001. https://doi.org/10.1088/1742-6596/2699/1/012001
 
-*Tip: we use [https://www.citethisforme.com](https://www.citethisforme.com) to make this task even easier.* 
+FitBark. (n.d.). FitBark 2 dog activity monitor. Retrieved from https://www.fitbark.com
+
+Kulkarni, Aniket & Bhuva, Dhruval & Syeda, Bushra Najeeb. (2024). Dog Activity Detection and Recognition.
+
+Kumpulainen, Pekka & Gizatdinova, Yulia & Vehkaoja, Antti & Valldeoriola, Anna & Somppi, Sanni & Törnqvist, Heini & Väätäjä, Heli & Majaranta, Päivi & Surakka, Veikko & Vainio, Outi & Kujala, Miiamaaria. (2018). Dog activity classification with movement sensor placed on the collar. 1–6. https://doi.org/10.1145/3295598.3295602
+
+Lara, O. D., & Labrador, M. A. (2013). A Survey on Human Activity Recognition using Wearable Sensors. IEEE Communications Surveys & Tutorials, 15(3), 1192–1209. https://doi.org/10.1109/SURV.2012.110112.00192
+
+Marcato, M., Tedesco, S., O’Mahony, C., O’Flynn, B., & Galvin, P. (2023). Machine learning based canine posture estimation using inertial data. PLOS ONE, 18(6), e0286311. https://doi.org/10.1371/journal.pone.0286311
+
+Muminov, A., Mukhiddinov, M., & Cho, J. (2022). Enhanced Classification of Dog Activities with Quaternion-Based Fusion Approach on High-Dimensional Raw Data from Wearable Sensors. Sensors, 22(23), 9471. https://doi.org/10.3390/s22239471
+
+Brugarolas, R., et al. (2016). Wearable Heart Rate Sensor Systems for Wireless Canine Health Monitoring. IEEE Sensors Journal, 16(10), 3454–3464. https://doi.org/10.1109/JSEN.2015.2485210
+
+Wang, J., Chen, Y., Hao, S., Peng, X., & Hu, L. (2017). Deep Learning for Sensor-based Activity Recognition: A Survey. Retrieved from https://arxiv.org/abs/1707.03502
+
+Warden, P., & Situnayake, D. (2019). TinyML: Machine learning with TensorFlow Lite on Arduino and ultra-low-power microcontrollers. O’Reilly Media.
 
 ----
 
@@ -130,8 +146,8 @@ The DachshundSense system demonstrates the potential of a low-cost TinyML approa
 I, AUTHORS NAME HERE, confirm that the work presented in this assessment is my own. Where information has been derived from other sources, I confirm that this has been indicated in the work.
 
 
-*Digitally Sign by typing your name here*
+*Nat*
 
-ASSESSMENT DATE
 
-Word count: 
+
+Word count: 1497
